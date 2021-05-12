@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign,prefer-destructuring,consistent-return */
-const axios = require("axios");
-const cheerio = require("cheerio");
+const ogs = require("open-graph-scraper");
 const { getScrapeDetailsValidation } = require("./validation");
 
 const {
@@ -9,51 +8,46 @@ const {
   internalServerError
 } = require("../Utils/responseCodes").responseMessages;
 
-async function scrapeData(html, keyFilter) {
-  const returnValue = {};
-  // set a reference to the document that came back
-  const $ = cheerio.load(html);
-
-  keyFilter.forEach(key => {
-    console.log("key", key);
-    const property = `'meta[property ="og:${key}"]'`;
-    console.log("property", property);
-    console.log("-----", `${$}(${property})`.attr("content"));
-
-    const value = ${$}('meta[property="og:${key}"]').attr("content");
-    returnValue[key] = value || "";
-  });
-  console.log("returnValue", returnValue);
-  return returnValue;
-}
-
 async function scrapeUrl(event) {
   console.log("Inside scrapeUrl function", event);
   const validationErrors = getScrapeDetailsValidation(event);
   if (validationErrors.length) return badRequestResponse(validationErrors);
   let ogKey = [
-    "title",
-    "type",
-    "image",
-    "url",
-    "audio",
-    "description",
-    "determiner",
-    "locale",
-    "site_name",
-    "video",
-    "audio"
+    "ogTitle",
+    "ogType",
+    "ogImage",
+    "ogUrl",
+    "ogAudio",
+    "ogDescription",
+    "ogDeterminer",
+    "ogLocale",
+    "ogSite_name",
+    "ogVideo",
+    "ogAudio"
   ];
 
   const { url, filterOgKey } = event;
-  // checking if explicitly og key are provide or not, if yes then take them as ogKey else default ogKey.
+
   ogKey = filterOgKey || ogKey;
 
-  return axios
-    .get(`${url}`)
-    .then(async ({ data }) => {
-      console.log("axios response", data);
-      return okResponse({ scrapeData: await scrapeData(data, ogKey) });
+  const customMetaTags = [];
+  // creating input for custom meta tags
+  ogKey.forEach(key => {
+    customMetaTags.push({
+      multiple: false,
+      property: key,
+      fieldName: key
+    });
+  });
+
+  return ogs({ url, customMetaTags })
+    .then(data => {
+      const returnData = {};
+      const { result } = data;
+      ogKey.forEach(key => {
+        if (key in result) returnData[key.substring(2)] = result[key];
+      });
+      return okResponse({ scrapeData: returnData });
     })
     .catch(error => {
       console.log("error", error);

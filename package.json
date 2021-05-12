@@ -38,8 +38,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.695.0",
-    "axios": "^0.21.1",
-    "cheerio": "^1.0.0-rc.9",
+    "open-graph-scraper": "^4.8.2",
     "request": "^2.88.2"
   },
   "homepage": "https://github.com/dharmendranegi/scrap-website#readme"
