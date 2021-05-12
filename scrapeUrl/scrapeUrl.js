@@ -47,7 +47,7 @@ async function scrapeUrl(event) {
       ogKey.forEach(key => {
         if (key in result) returnData[key.substring(2)] = result[key];
       });
-      return okResponse({ scrapeData: returnData });
+      return okResponse(returnData);
     })
     .catch(error => {
       console.log("error", error);

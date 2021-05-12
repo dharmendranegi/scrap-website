@@ -8,16 +8,15 @@ describe("get scraped details for given url", () => {
     data.body = JSON.parse(data.body);
     console.log("website data", data);
     expect(data).toHaveProperty("statusCode", 200);
-    expect(data).toHaveProperty("body.scrapeData");
-  }, 3000);
+  }, 5000);
 
-  test("[positive] get scraped details for given url", async () => {
+  test("[positive] get scraped details for given url with specific meta key", async () => {
     urlInput.filterOgKey = ["ogTitle", "ogType", "description"];
     const data = await scrapeUrl(urlInput);
     data.body = JSON.parse(data.body);
     console.log("website data", data);
     expect(data).toHaveProperty("statusCode", 200);
-    expect(data).toHaveProperty("body.scrapeData", "Title");
-    expect(data).toHaveProperty("body.scrapeData", "Type");
-  }, 3000);
+    expect(data.body).toHaveProperty("Title");
+    expect(data.body).toHaveProperty("Type");
+  }, 5000);
 });
