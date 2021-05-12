@@ -25,7 +25,7 @@
     "bundle": "./node_modules/.bin/webpack",
     "format": "prettier --write --ignore-path .gitignore \"./**/*.{js,json}\"",
     "formatCheck": "prettier --check --ignore-path .gitignore \"./**/*.{js,json}\"",
-    "test": "node jest --config=jest.config.js --verbose --detectOpenHandles --coverage"
+    "test": "npm test --config=jest.config.js --verbose --detectOpenHandles --coverage"
   },
   "repository": {
     "type": "git",
