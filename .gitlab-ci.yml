@@ -1,0 +1,45 @@
+image: node:latest
+
+stages:
+  - formatCheck
+  - test
+  - dev-deploy
+  - prod-deploy
+
+format check:
+  stage: formatCheck
+  script:
+    - npm install --only dev
+    - npm run formatCheck --verbose
+
+test before deploy:
+  except:
+    - prod
+  stage: test
+  script:
+    - npm install
+    - npm test
+
+dev-deployment:
+  stage: dev-deploy
+  only:
+    - master
+  before_script:
+    - npm install -g serverless@1.83.2
+    - npm install
+    - npm run bundle
+  script:
+    - serverless deploy --stage dev --region ap-south-1 --verbose
+  environment: dev
+
+production-deployment:
+  stage: prod-deploy
+  only:
+    - prod
+  before_script:
+    - npm install -g serverless@1.83.2
+    - npm install
+    - npm run bundle
+  script:
+    - serverless deploy --stage dev --region eu-west-1 --verbose
+  environment: prod

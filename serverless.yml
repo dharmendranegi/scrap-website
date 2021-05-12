@@ -1,0 +1,28 @@
+service: scrape-website
+
+provider:
+  name: aws
+  region: ${env:REGION, 'ap-south-1'}
+  stage: ${opt:stage, 'dev'}
+  runtime: nodejs12.x
+  memorySize: 256
+  timeout: 30
+  environment:
+    REGION: ${self:provider.region}
+    STAGE: ${self:provider.stage, 'dev'}
+  iamRoleStatements: ${file(./Resources/LambdaRole.yml)}
+
+plugins:
+  - serverless-pseudo-parameters
+  - serverless-plugin-split-stacks
+  - serverless-dotenv-plugin
+
+functions:
+  scrapeUrl: ${file(./Resources/lambdaResource/scrapeUrl.yml)}
+
+custom:
+  splitStacks:
+    nestedStackCount: 4
+    perFunction: false
+    perType: true
+    perGroupFunction: false

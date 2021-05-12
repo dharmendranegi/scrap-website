@@ -1,0 +1,10 @@
+handler: scrapeUrl/index.handler
+name: scrapeUrl
+package: 
+  individually: true
+  artifact: "./dist/scrapeUrl.zip"
+events:
+  - http:
+      path: /scrapeUrl
+      method: post
+      cors: true
