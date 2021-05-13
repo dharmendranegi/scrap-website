@@ -29,7 +29,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
-      - uses: artiomtr/jest-coverage-report-action@v1.3
         with:
           node-version: 12
 
