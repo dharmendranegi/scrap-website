@@ -19,4 +19,16 @@ describe("get scraped details for given url", () => {
     expect(data.body).toHaveProperty("Title");
     expect(data.body).toHaveProperty("Type");
   }, 5000);
+
+  test("[Negative] try to get scraped details without providing url key", async () => {
+    const data = await scrapeUrl({});
+    data.body = JSON.parse(data.body);
+    expect(data).toHaveProperty("statusCode", 400);
+  }, 5000);
+
+  test("[Negative] try to get scraped details with empty url", async () => {
+    const data = await scrapeUrl({ url: "" });
+    data.body = JSON.parse(data.body);
+    expect(data).toHaveProperty("statusCode", 400);
+  }, 5000);
 });
