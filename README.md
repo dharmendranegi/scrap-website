@@ -1,5 +1,3 @@
-[![pipeline status](https://github.com/dharmendranegi/scrap-website/badges/main/pipeline.svg)](https://github.com/dharmendranegi/scrap-website/-/commits/main)
-[![coverage report](https://github.com/dharmendranegi/scrap-website/badges/main/coverage.svg)](https://github.com/dharmendranegi/scrap-website/-/commits/main)
 # Scrap-Website-Url
 This project will help to scrap given website url and return the og meta data.
 
