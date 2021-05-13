@@ -18,14 +18,15 @@
     "serverless-pseudo-parameters": "^2.5.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
-    "zip-webpack-plugin": "^3.0.0"
+    "zip-webpack-plugin": "^3.0.0",
+    "jest-coverage-badges": "^1.1.2"
   },
   "main": "index.js",
   "scripts": {
     "bundle": "./node_modules/.bin/webpack",
     "format": "prettier --write --ignore-path .gitignore \"./**/*.{js,json}\"",
     "formatCheck": "prettier --check --ignore-path .gitignore \"./**/*.{js,json}\"",
-    "test": "jest --config=jest.config.js --verbose --detectOpenHandles --coverage"
+    "test": "jest --config=jest.config.js --verbose --detectOpenHandles --coverage && jest-coverage-badges"
   },
   "repository": {
     "type": "git",
